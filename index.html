@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="js/lib.js"></script>
+	<style>
+	textarea{
+		display: none;		
+	}
+
+</style>
+<script>
+	$(document).ready(function() {
+		$('button').click(function(event) {
+			/* Act on the event */
+			$.ajax({
+				url:'api/demo.html',
+				type:'GET',
+				success:function(data){					
+
+
+					$("textarea").val(data)
+
+					code=$("textarea");
+
+					val=$.replace_tag(code.minify());
+					el=$("<div></div>").html(val);
+					$.prettify_code(el);
+
+					code.css('white-space', 'pre').show_code($.undo_tag(el.html()));
+
+					formatted_data = $("textarea").val();
+
+
+					$("#formatted_html").html(formatted_data);
+
+				}
+
+			})
+		});
+	});
+</script>
+</head>
+<body>
+	<button>Load Html</button>
+	<textarea></textarea>
+	<xmp id="formatted_html">
+
+	</xmp>
+	
+</body>
+
+</html>
